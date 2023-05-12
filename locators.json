@@ -1,0 +1,30 @@
+{
+    "ButtoncontainsOK": {
+        "screenshot": ".images\\buttoncontainsok-screenshot.png",
+        "source": "https://robotsparebinindustries.com/#/robot-order",
+        "strategy": "xpath",
+        "type": "browser",
+        "value": "//button[contains(.,'OK')]"
+    },
+    "Head": {
+        "screenshot": ".images\\head-screenshot.png",
+        "source": "https://robotsparebinindustries.com/#/robot-order",
+        "strategy": "id",
+        "type": "browser",
+        "value": "head"
+    },
+    "bodyID": {
+        "screenshot": null,
+        "source": "https://robotsparebinindustries.com/#/robot-order",
+        "strategy": "id",
+        "type": "browser",
+        "value": "id-body-1"
+    },
+    "bodyRadioBttnLocator": {
+        "screenshot": ".images\\bodyradiobttnlocator-screenshot.png",
+        "source": "https://robotsparebinindustries.com/#/robot-order",
+        "strategy": "xpath",
+        "type": "browser",
+        "value": "//label[contains(.,'Roll-a-thor body')]"
+    }
+}
