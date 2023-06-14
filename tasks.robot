@@ -15,7 +15,6 @@ Library             RPA.PDF
 Order robots from RobotSpareBin Industries Inc
     Open the robot order website
     ${main_Table}=    Get orders
-    Wait Until Keyword Succeeds    5x    1s
     FOR    ${row}    IN    @{main_Table}
         Print current row    ${row}
         Close the annoying modal
