@@ -14,8 +14,14 @@ Library             RPA.PDF
 *** Tasks ***
 Order robots from RobotSpareBin Industries Inc
     Open the robot order website
-    Close the annoying modal
     ${main_Table}=    Get orders
+    Wait Until Keyword Succeeds    5x    1s
+    FOR    ${row}    IN    @{main_Table}
+        Print current row    ${row}
+        Close the annoying modal
+        Wait Until Keyword Succeeds    5x    200ms    Fill the form    ${row}
+        Wait Until Keyword Succeeds    5x    200ms    Collect the results    ${row}
+    END
 
 
 *** Keywords ***
@@ -25,10 +31,6 @@ Open the robot order website
 Get orders
     Download    https://robotsparebinindustries.com/orders.csv    overwrite=True
     ${my_Table}=    Read table from CSV    orders.csv    header=True
-    FOR    ${order}    IN    @{my_Table}
-        Print current row    ${order}
-        Wait Until Keyword Succeeds    5x    1s    Fill the form    ${order}
-    END
     RETURN    ${my_Table}
 
 Print current row
@@ -46,13 +48,15 @@ Fill the form
     Input Text    //*[@placeholder="Enter the part number for the legs"]    ${order}[Legs]
     Input Text    address    ${order}[Address]
     Click Button When Visible    //*[@id="preview"]
-    Collect the results    ${order}
-    ${pdf}=    Store the receipt as a PDF file    ${order}[Order number]
     [Teardown]    Click Button When Visible    //*[@id="order"]
 
 Collect the results
     [Arguments]    ${order}
     Screenshot    //*[@id="robot-preview-image"]    ${OUTPUT_DIR}${/}Order_${order}[Order number].png
+    ${pdf}=    Store the receipt as a PDF file    ${order}[Order number]
+    Html To Pdf    ${pdf}    ${OUTPUT_DIR}${/}receipts${/}receipt_${order}[Order number].pdf
 
 Store the receipt as a PDF file
-    [Arguments]    ${orderNumber}
+    [Arguments]    ${pdfName}
+    Wait Until Element Is Visible    id:receipt
+    ${pdfContent}=    Get Element Attribute    id:receipt    outerHTML
