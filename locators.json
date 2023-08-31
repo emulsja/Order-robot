@@ -1,4 +1,11 @@
 {
+    "Btndark": {
+        "screenshot": ".images\\btndark-screenshot.png",
+        "source": "https://robotsparebinindustries.com/#/robot-order",
+        "strategy": "css",
+        "type": "browser",
+        "value": ".btn-dark"
+    },
     "ButtoncontainsOK": {
         "screenshot": ".images\\buttoncontainsok-screenshot.png",
         "source": "https://robotsparebinindustries.com/#/robot-order",
