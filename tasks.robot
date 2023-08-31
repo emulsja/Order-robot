@@ -5,11 +5,11 @@ Documentation       Orders robots from RobotSpareBin Industries Inc.
 ...                 Embeds the screenshot of the robot to the PDF receipt.
 ...                 Creates ZIP archive of the receipts and the images.
 
-Library             RPA.Browser.Selenium    # auto_close=${False}
+Library             RPA.Browser.Selenium    auto_close=${True}
 Library             RPA.HTTP
 Library             RPA.Tables
 Library             RPA.PDF
-Library            RPA.Archive
+Library             RPA.Archive
 
 
 *** Tasks ***
@@ -26,6 +26,8 @@ Order robots from RobotSpareBin Industries Inc
         Order another robot
     END
     Archive output PDFs
+    [Teardown] Close Browser
+    
 
 *** Keywords ***
 Open the robot order website
@@ -37,7 +39,6 @@ Get orders
     RETURN    ${my_Table}
 
 Close the annoying modal
-    # Wait And Click Button    //button[contains(.,'OK')] .btn-dark btn btn-dark
     Click Element If Visible    //*[@class="btn btn-dark"]
     Wait Until Element Is Not Visible    //*[@id="modal-content"]
 
@@ -99,3 +100,6 @@ Order another robot
 Archive output PDFs
     ${zip_output_name} =    Set Variable    ${CURDIR}${/}output${/}receipts.zip
     Archive Folder With Zip    ${CURDIR}${/}output${/}receipts    ${zip_output_name}
+
+[Teardown] Close Browser
+    Close Browser
